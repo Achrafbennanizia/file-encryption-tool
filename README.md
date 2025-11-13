@@ -41,4 +41,38 @@ source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
 pip install -r requirements.txt
 ```
-# file-encryption-tool
+## Verwendung
+Datei verschlüsseln
+```bash
+python filecrypt.py encrypt -i geheim.txt -o geheim.enc
+```
+- Passwort wird sicher per Prompt abgefragt (zweimal zur Bestätigung).
+- Output ist eine Binärdatei (geheim.enc).
+
+Optional kannst du das Passwort (für Tests) direkt angeben:
+```bash
+python filecrypt.py encrypt -i geheim.txt -o geheim.enc -p "test123!"
+```
+⚠️ Warnung: Passwort auf der Kommandozeile ist unsicher (History, ps, Logs).
+
+Datei entschlüsseln
+```bash
+python filecrypt.py decrypt -i geheim.enc -o geheim_entschluesselt.txt
+```
+- Passwort wird einmal abgefragt.
+- Bei falschem Passwort oder manipulierten Daten gibt das Tool einen Fehler aus.
+
+Hilfe
+```bash
+python filecrypt.py -h
+python filecrypt.py encrypt -h
+python filecrypt.py decrypt -h
+```
+
+## Sicherheitsaspekte
+
+- AES-256-GCM bietet Vertraulichkeit und Integrität (authentifizierte Verschlüsselung).
+- PBKDF2 mit hoher Iterationszahl erschwert Brute-Force-Angriffe auf das Passwort.
+- Salt und Nonce sind zufällig und werden pro Verschlüsselung neu erzeugt.
+- Der Schlüssel wird nie in der Datei gespeichert.
+- Trotzdem ist das Tool nur als Lern- & Demo-Projekt gedacht und nicht als vollwertiger Ersatz für professionelle Lösungen wie age, gpg etc.
